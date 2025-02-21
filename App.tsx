@@ -1,22 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
+import { supabase } from './utils/supabase';
+import React from 'react';
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function App() {
   const [message, setMessage] = useState("Checking Supabase...");
 
   useEffect(() => {
     const checkConnection = async () => {
-      const { data, error } = await supabase.from("test_users").select("*").limit(1);
+      const { data, error } = await supabase.from("canadian_company").select("*");
 
       if (error) {
         setMessage("Supabase connection failed: " + error.message);
       } else {
-        setMessage("Connected to Supabase! 🎉");
+        setMessage(data[0].company_name);
       }
     };
 

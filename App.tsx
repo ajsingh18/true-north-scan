@@ -1,41 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/HomeScreen';
+import ScannerScreen from './src/screens/BarcodeScannerScreen';
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [message, setMessage] = useState("Checking Supabase...");
-
-  useEffect(() => {
-    const checkConnection = async () => {
-      const { data, error } = await supabase.from("test_users").select("*").limit(1);
-
-      if (error) {
-        setMessage("Supabase connection failed: " + error.message);
-      } else {
-        setMessage("Connected to Supabase! 🎉");
-      }
-    };
-
-    checkConnection();
-  }, []);
-
   return (
-    <View style={styles.container}>
-    <Text>{message}</Text> 
-    <StatusBar style="auto" />
-  </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Scanner" component={ScannerScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

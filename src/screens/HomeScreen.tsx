@@ -1,54 +1,62 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CarouselComponent from '../components/carousel-component'; // Adjust the import path as needed
+import CarouselComponent from '../components/carousel-component';
+import { globalStyles } from '../styles/styles';
 
 const barcodeImage = require('../../assets/barcode-image.png');
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {/* Barcode Section */}
       <View style={styles.barcodeContainer}>
         <Image source={barcodeImage} style={styles.barcodeImage} resizeMode="contain" />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Scanner')}>
-          <Text style={styles.buttonText}>Open Scanner</Text>
+        <TouchableOpacity style={globalStyles.button} onPress={() => navigation.navigate('Scanner')}>
+          <Text style={globalStyles.buttonText}>Open Scanner</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Reusable Product Carousel Component */}
-      <CarouselComponent />
-    </View>
+      {/* Carousel */}
+      <View style={styles.section}>
+        <CarouselComponent />
+      </View>
+
+      {/* View Products */}
+      <View style={styles.section}>
+        <TouchableOpacity style={globalStyles.button} onPress={() => navigation.navigate('Products')}>
+          <Text style={globalStyles.buttonText}>View Trending Products</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Add Product */}
+      <View style={styles.section}>
+        <TouchableOpacity style={globalStyles.button} onPress={() => navigation.navigate('AddProduct')}>
+          <Text style={globalStyles.buttonText}>Want to add a product?</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  scrollContainer: {
+    paddingVertical: 24,
+    paddingHorizontal: 16,
     backgroundColor: '#fff',
   },
   barcodeContainer: {
     alignItems: 'center',
-    padding: 20,
-    justifyContent: 'center',
+    marginBottom: 24,
   },
   barcodeImage: {
     width: 400,
-    height: 200, 
+    height: 200,
   },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 10,
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    fontWeight: 'bold',
+  section: {
+    marginBottom: 24,
   },
 });
+

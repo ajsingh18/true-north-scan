@@ -1,9 +1,27 @@
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, } from 'react-native';
+import LastScannedItem from '../components/last-scanned-item';
 
-export default function TrendingScreen() {
+
+const ScannedProductScreen = ({ route }: any) => {
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Trending Products</Text>
-    </View>
+    <LastScannedItem
+  name="Doritos Nacho Cheese"
+  lastViewed={new Date()} // ← can pass actual Date now
+  imageUri="https://example.com/doritos.jpg"
+  onPress={() =>
+    navigation.navigate('Products', {
+      screen: 'ScannedProduct',
+      params: { product: lastScannedProduct }
+    })
+  }
+/>
+
+    
   );
-}
+};
+
+export default ScannedProductScreen;
+
+

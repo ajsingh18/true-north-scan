@@ -4,6 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import CarouselComponent from '../components/carousel-component';
 import { globalStyles } from '../styles/styles';
 
+const img = require('../../assets/doritos.jpg');
+
+
 const barcodeImage = require('../../assets/barcode-image.png');
 
 export default function HomeScreen() {
@@ -14,7 +17,7 @@ export default function HomeScreen() {
       {/* Barcode Section */}
       <View style={styles.barcodeContainer}>
         <Image source={barcodeImage} style={styles.barcodeImage} resizeMode="contain" />
-        <TouchableOpacity style={globalStyles.button} onPress={() => navigation.navigate('Scanner')}>
+        <TouchableOpacity style={globalStyles.button} onPress={() => navigation.navigate('Products',{ screen: 'Scanner'})}>
           <Text style={globalStyles.buttonText}>Open Scanner</Text>
         </TouchableOpacity>
       </View>
@@ -37,6 +40,28 @@ export default function HomeScreen() {
           <Text style={globalStyles.buttonText}>Want to add a product?</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+    style={globalStyles.button}
+    onPress={() =>
+      navigation.navigate('Products', {
+        screen: 'ScannedProduct',
+        params: {
+        product: {
+          name: 'Doritos Nacho Cheese',
+          company: 'PepsiCo',
+          image: img,
+          country: 'USA',
+          alternatives: ['Hardbite Chips', 'Covered Bridge Chips'],
+          category: 'Chips',
+        },
+      }
+      })
+    }
+    
+  >
+    <Text style={globalStyles.buttonText}>Test Scanned Product</Text>
+  </TouchableOpacity>
     </ScrollView>
   );
 }
